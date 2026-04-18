@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Create Account</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<style>
+.error{
+color:red;
+font-size:13px;
+display:block;
+margin-bottom:8px;
+text-align:left;
+}
+</style>
+
+</head>
+
+<body class="signup-bg">
+
+<div class="form-card">
+
+<h2>Create Account</h2>
+
+<form action="/register" method="POST">
+
+<input type="text" name="name" placeholder="Full Name" required>
+
+<!-- MOBILE -->
+<input type="text" name="mobile" id="mobile" placeholder="Mobile Number" required>
+<small class="error" id="mobileError"></small>
+
+<input type="text" name="username" placeholder="Username" required>
+
+<!-- EMAIL -->
+<input type="email" name="email" id="email" placeholder="Email" required>
+<small class="error" id="emailError"></small>
+
+<!-- PASSWORD -->
+<div class="password-box">
+<input type="password" name="password" id="password" placeholder="Password" required>
+<span onclick="togglePassword()">👁</span>
+</div>
+<small class="error" id="passError"></small>
+
+<!-- CONFIRM PASSWORD -->
+<div class="password-box">
+<input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password" required>
+<span onclick="toggleConfirm()">👁</span>
+</div>
+<small class="error" id="confirmError"></small>
+
+<button type="submit">Create Account</button>
+
+</form>
+
+<p style="margin-top:15px;">
+Already have an account?
+<a href="/login">Login</a>
+</p>
+
+</div>
+
+<!-- JS -->
+<script>
+
+// MOBILE VALIDATION
+document.getElementById("mobile").addEventListener("input", function(){
+let val = this.value;
+let error = document.getElementById("mobileError");
+
+if(!/^[0-9]{10}$/.test(val)){
+error.innerText = "Enter valid 10-digit mobile number";
+}else{
+error.innerText = "";
+}
+});
+
+// EMAIL VALIDATION
+document.getElementById("email").addEventListener("input", function(){
+let val = this.value;
+let error = document.getElementById("emailError");
+
+if(!val.includes("@") || !val.includes(".")){
+error.innerText = "Enter valid email";
+}else{
+error.innerText = "";
+}
+});
+
+// PASSWORD VALIDATION
+document.getElementById("password").addEventListener("input", function(){
+let val = this.value;
+let error = document.getElementById("passError");
+
+if(val.length < 6){
+error.innerText = "Password must be at least 6 characters";
+}else{
+error.innerText = "";
+}
+});
+
+// CONFIRM PASSWORD
+document.getElementById("confirm_password").addEventListener("input", function(){
+let pass = document.getElementById("password").value;
+let val = this.value;
+let error = document.getElementById("confirmError");
+
+if(val !== pass){
+error.innerText = "Passwords do not match";
+}else{
+error.innerText = "";
+}
+});
+
+// SHOW/HIDE PASSWORD
+function togglePassword(){
+let x = document.getElementById("password");
+x.type = (x.type === "password") ? "text" : "password";
+}
+
+function toggleConfirm(){
+let x = document.getElementById("confirm_password");
+x.type = (x.type === "password") ? "text" : "password";
+}
+
+</script>
+
+</body>
+
+</html>

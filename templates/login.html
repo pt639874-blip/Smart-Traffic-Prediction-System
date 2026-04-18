@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Login</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="login-bg">
+
+<div class="form-card">
+
+<h2>Login</h2>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages[-1:] %}
+
+<div class="alert {{category}}">
+{{message}}
+</div>
+
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<form action="/login_user" method="POST">
+
+<input type="text" name="username" placeholder="Username" required>
+
+<!-- PASSWORD WITH SHOW/HIDE -->
+<div class="password-box">
+<input type="password" name="password" id="password" placeholder="Password" required>
+<span onclick="togglePassword()">👁</span>
+</div>
+
+<button type="submit">Login</button>
+
+</form>
+
+<p style="margin-top:15px;">
+Don't have an account?
+<a href="/signup">Create Account</a>
+</p>
+
+</div>
+
+<!-- JS -->
+<script>
+function togglePassword(){
+let x = document.getElementById("password");
+x.type = (x.type === "password") ? "text" : "password";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Traffic Classification System</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<section class="hero" id="hero">
+
+<nav class="navbar">
+
+<h2>Traffic Classification</h2>
+
+<div class="nav-links">
+
+<a href="/">HOME</a>
+
+<a href="/login" class="login-btn">LOGIN</a>
+
+<a href="/signup" class="signup-btn">SIGN UP</a>
+
+</div>
+
+</nav>
+
+<div class="hero-content">
+
+<h1>
+
+HYBRID QUANTUM <br>
+CLASSICAL FRAMEWORK <br>
+FOR URBAN TRAFFIC <br>
+STATE CLASSIFICATION
+
+</h1>
+
+<p>
+
+A hybrid machine learning framework designed to analyze
+traffic conditions using environmental and density data
+to predict congestion levels.
+
+</p>
+
+</div>
+
+<div class="slider-buttons">
+
+<button onclick="prevSlide()">❮</button> <button onclick="nextSlide()">❯</button>
+
+</div>
+
+</section>
+
+<script>
+
+let images = [
+
+"https://images.unsplash.com/photo-1502877338535-766e1452684a",
+
+"https://images.unsplash.com/photo-1504384308090-c894fdcc538d",
+
+"https://images.unsplash.com/photo-1494526585095-c41746248156"
+
+];
+
+
+let index = 0;
+
+
+function changeBackground(){
+
+document.getElementById("hero").style.backgroundImage =
+
+"linear-gradient(rgba(255,255,255,0.45), rgba(255,255,255,0.5)), url(" + images[index] + ")";
+
+}
+
+
+function nextSlide(){
+
+index++;
+
+if(index >= images.length){
+
+index = 0;
+
+}
+
+changeBackground();
+
+}
+
+
+function prevSlide(){
+
+index--;
+
+if(index < 0){
+
+index = images.length - 1;
+
+}
+
+changeBackground();
+
+}
+
+
+setInterval(nextSlide,5000);
+
+</script>
+
+</body>
+
+</html>

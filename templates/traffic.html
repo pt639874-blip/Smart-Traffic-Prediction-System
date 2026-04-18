@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>Traffic Prediction</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body class="traffic-bg">
+
+<!-- TOP BAR -->
+
+<div class="top-bar">
+
+<h2 class="page-title">🚦Traffic Prediction System</h2>
+
+<div class="top-buttons">
+
+<a href="/analytics" class="analytics-btn">📊 Graphs</a>
+
+<a href="/logout">
+<button class="logout-btn">Sign Out</button>
+</a>
+
+</div>
+
+</div>
+
+<!-- FORM CARD -->
+
+<div class="form-card">
+
+<h2 class="welcome-text">Welcome {{name}}</h2>
+
+<h3>Traffic Prediction Inputs</h3>
+
+<form action="/predict" method="POST" class="traffic-form">
+
+<div class="form-grid">
+
+<div class="form-group">
+<input type="number" name="vehicle_count" placeholder="Total Vehicle Count" required>
+</div>
+
+<div class="form-group">
+<input type="number" name="avg_speed" placeholder="Average Speed (km/h)" required>
+</div>
+
+<div class="form-group">
+<input type="number" step="any" name="traffic_density" placeholder="Traffic Density (%)" required>
+</div>
+
+<div class="form-group">
+<input type="number" step="any" name="temp" placeholder="Temperature">
+</div>
+
+<div class="form-group">
+<input type="number" step="any" name="rain" placeholder="Rain (mm)">
+</div>
+
+<div class="form-group">
+<input type="number" step="any" name="snow" placeholder="Snow (mm)">
+</div>
+
+<div class="form-group">
+<input type="number" step="any" name="clouds" placeholder="Cloud Coverage %">
+</div>
+
+<div class="form-group">
+<input type="number" name="hour" placeholder="Hour (0-23)">
+</div>
+
+</div>
+
+<button type="submit">Predict Traffic</button>
+
+</form>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>Traffic Analytics Dashboard</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body class="traffic-bg">
+
+<div class="top-bar">
+
+<h2 class="page-title">Traffic Analytics Dashboard</h2>
+
+<div class="top-buttons">
+
+<a href="/traffic" class="analytics-btn">⬅ Back</a>
+
+<a href="/logout">
+<button class="logout-btn">Sign Out</button>
+</a>
+
+</div>
+
+</div>
+
+<!-- GRAPH DASHBOARD -->
+
+<div class="graph-container">
+
+<div class="graph-card">
+
+<h3>Traffic Probability Analysis</h3>
+
+<canvas id="probChart" onclick="enlargeGraph('probChart')"></canvas>
+
+</div>
+
+<div class="graph-card">
+
+<h3>Traffic Density vs Time</h3>
+
+<canvas id="densityChart" onclick="enlargeGraph('densityChart')"></canvas>
+
+</div>
+
+<div class="graph-card">
+
+<h3>Weather Impact on Traffic</h3>
+
+<canvas id="weatherChart" onclick="enlargeGraph('weatherChart')"></canvas>
+
+</div>
+
+</div>
+
+<!-- GRAPH FULLSCREEN MODAL -->
+
+<div class="graph-modal" id="graphModal">
+
+<canvas id="modalChart"></canvas>
+
+</div>
+
+<script>
+
+
+/* TRAFFIC PROBABILITY GRAPH */
+
+new Chart(document.getElementById("probChart"), {
+
+type:'bar',
+
+data:{
+labels:['Free Flow','Moderate','Congested'],
+datasets:[{
+label:'Traffic Probability',
+data:[65,30,5],
+backgroundColor:['#27ae60','#f1c40f','#e74c3c']
+}]
+},
+
+options:{
+responsive:true,
+maintainAspectRatio:false,
+animation:false
+}
+
+});
+
+
+
+/* TRAFFIC DENSITY GRAPH */
+
+new Chart(document.getElementById("densityChart"), {
+
+type:'line',
+
+data:{
+labels:['6AM','9AM','12PM','3PM','6PM','9PM'],
+datasets:[{
+label:'Traffic Density',
+data:[20,70,50,65,90,45],
+borderColor:'#3498db',
+backgroundColor:'rgba(52,152,219,0.2)',
+fill:true,
+tension:0.4
+}]
+},
+
+options:{
+responsive:true,
+maintainAspectRatio:false,
+animation:false
+}
+
+});
+
+
+
+/* WEATHER IMPACT GRAPH */
+
+new Chart(document.getElementById("weatherChart"), {
+
+type:'pie',
+
+data:{
+labels:['Clear','Rain','Snow','Cloudy'],
+datasets:[{
+data:[45,30,5,20],
+backgroundColor:['#2ecc71','#3498db','#95a5a6','#f1c40f']
+}]
+},
+
+options:{
+responsive:true,
+maintainAspectRatio:false,
+animation:false
+}
+
+});
+
+
+
+/* GRAPH ENLARGE FUNCTION */
+
+function enlargeGraph(canvasId){
+
+let modal = document.getElementById("graphModal");
+
+let modalCanvas = document.getElementById("modalChart");
+
+let ctx = modalCanvas.getContext("2d");
+
+let original = document.getElementById(canvasId);
+
+modal.style.display="flex";
+
+ctx.clearRect(0,0,modalCanvas.width,modalCanvas.height);
+
+ctx.drawImage(original,0,0,modalCanvas.width,modalCanvas.height);
+
+}
+
+
+/* CLOSE MODAL */
+
+document.getElementById("graphModal").onclick=function(){
+
+this.style.display="none";
+
+}
+
+
+</script>
+
+</body>
+
+</html>
