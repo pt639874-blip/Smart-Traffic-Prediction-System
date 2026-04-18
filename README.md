@@ -21,3 +21,11 @@ git clone https://github.com/pt639874-blip/Smart-Traffic-Prediction-System.git
 cd Smart-Traffic-Prediction-System
 pip install -r requirements.txt
 python app.py
+
+📊 Dataset
+Dataset is not included due to large size.  
+Download from:  
+https://archive.ics.uci.edu/ml/datasets/Metro+Interstate+Traffic+Volume  
+
+👨‍💻 Author
+Prajwal Tiwari
