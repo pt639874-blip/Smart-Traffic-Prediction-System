@@ -11,12 +11,13 @@ data = pd.read_csv("Metro_Interstate_Traffic_Volume.csv")
 # Convert datetime
 data["date_time"] = pd.to_datetime(data["date_time"])
 
-# Extract hour
+# Extract useful features
 data["hour"] = data["date_time"].dt.hour
+data["day"] = data["date_time"].dt.dayofweek
+data["month"] = data["date_time"].dt.month
 
 # Create traffic state
 def traffic_state(volume):
-
     if volume < 1500:
         return 0
     elif volume < 3500:
@@ -32,7 +33,9 @@ X = data[[
     "rain_1h",
     "snow_1h",
     "clouds_all",
-    "hour"
+    "hour",
+    "day",
+    "month"
 ]]
 
 # Target
@@ -44,7 +47,14 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # Train model
-model = RandomForestClassifier(n_estimators=400)
+model = RandomForestClassifier(
+    n_estimators=300,
+    max_depth=20,
+    min_samples_split=5,
+    min_samples_leaf=2,
+    random_state=42,
+    n_jobs=-1
+)
 
 model.fit(X_train, y_train)
 
