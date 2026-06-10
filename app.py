@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, flash, session
 import sqlite3
 import pickle
 import re
+from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
@@ -57,7 +58,6 @@ def register():
     password = request.form["password"]
     confirm_password = request.form["confirm_password"]
 
-    # VALIDATIONS
     if password != confirm_password:
         flash("Passwords do not match", "error")
         return redirect("/signup")
@@ -77,21 +77,18 @@ def register():
     conn = sqlite3.connect("users.db")
     cursor = conn.cursor()
 
-    # CHECK USERNAME
     cursor.execute("SELECT * FROM users WHERE username=?", (username,))
     if cursor.fetchone():
         flash("Username already exists", "error")
         conn.close()
         return redirect("/signup")
 
-    # CHECK EMAIL
     cursor.execute("SELECT * FROM users WHERE email=?", (email,))
     if cursor.fetchone():
         flash("Email already registered", "error")
         conn.close()
         return redirect("/signup")
 
-    # HASH PASSWORD
     hashed_password = generate_password_hash(password)
 
     cursor.execute(
@@ -165,14 +162,19 @@ def predict():
     clouds = float(request.form["clouds"])
     hour = int(request.form["hour"])
 
-    data = [[temp, rain, snow, clouds, hour]]
+    # Auto add current day and month
+    today = datetime.now()
+    day = today.weekday()   # 0-6
+    month = today.month     # 1-12
+
+    data = [[temp, rain, snow, clouds, hour, day, month]]
 
     prediction = model.predict(data)
     probability = model.predict_proba(data)
 
-    free_prob = round(probability[0][0]*100,2)
-    mod_prob = round(probability[0][1]*100,2)
-    cong_prob = round(probability[0][2]*100,2)
+    free_prob = round(probability[0][0] * 100, 2)
+    mod_prob = round(probability[0][1] * 100, 2)
+    cong_prob = round(probability[0][2] * 100, 2)
 
     if prediction[0] == 0:
         result = "Free Flow Traffic"
@@ -181,7 +183,8 @@ def predict():
     else:
         result = "Heavy Congestion"
 
-    return render_template("result.html",
+    return render_template(
+        "result.html",
         prediction=result,
         free_prob=free_prob,
         mod_prob=mod_prob,
@@ -189,5 +192,4 @@ def predict():
     )
 
 if __name__ == "__main__":
-    app.run(host="0.0." 
-        "0.0", port=10000)
+    app.run(host="0.0.0.0", port=10000)
