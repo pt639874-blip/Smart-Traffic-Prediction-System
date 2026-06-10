@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Traffic Prediction Result</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body class="result-bg">
+
+
+<div class="result-container">
+
+
+<!-- RESULT CARD -->
+
+<div class="result-card">
+
+<h2>🚦 Traffic Prediction Result</h2>
+
+<h3>{{ prediction }}</h3>
+
+<div class="probability">
+
+<p style="color:green;">● Free Flow : {{free_prob}}%</p>
+
+<p style="color:orange;">● Moderate : {{mod_prob}}%</p>
+
+<p style="color:red;">● Congested : {{cong_prob}}%</p>
+
+</div>
+
+<a href="/analytics">
+<button class="analytics-view-btn">📊 View Analytics</button>
+</a>
+<a href="/traffic">
+<button class="predict-btn">Predict Again</button>
+</a>
+
+</div>
+<div class="traffic-indicator">
+
+{% if prediction == "Free Flow Traffic" %}
+
+<div class="status free">
+🟢 Free Flow Traffic
+</div>
+
+{% elif prediction == "Moderate Traffic" %}
+
+<div class="status moderate">
+🟡 Moderate Traffic
+</div>
+
+{% else %}
+
+<div class="status congested">
+🔴 Heavy Congestion
+</div>
+
+{% endif %}
+
+</div>
+
+<div class="map-container">
+
+<h3>📍 Traffic Location Visualization</h3>
+
+<div id="map"></div>
+
+</div>
+
+
+<!-- Leaflet Map Library -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+
+var map = L.map('map').setView([25.3176, 82.9739], 13); // Varanasi
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+}).addTo(map);
+
+var marker = L.marker([25.3176, 82.9739]).addTo(map);
+
+marker.bindPopup("<b>Traffic Prediction Location</b><br>Varanasi City").openPopup();
+
+</script>
+<!-- RECOMMENDATION + SAFETY SECTION -->
+
+<div class="info-section">
+
+
+<!-- Recommendations -->
+
+<div class="recommend-box">
+
+<h3>💡 Recommendations</h3>
+
+<div class="alert-box">⚠ Consider postponing non-essential travel</div>
+
+<div class="alert-box">⚠ Allow 30-60 minutes extra travel time</div>
+
+<div class="alert-box">⚠ Use alternate routes or public transportation</div>
+
+<div class="alert-box">⚠ Check real-time traffic apps for best routes</div>
+
+<div class="alert-box">⚠ Consider carpooling to reduce traffic</div>
+
+</div>
+
+
+
+<!-- Safety Directions -->
+
+<div class="safety-box">
+
+<h3>🛡 Safety Directions</h3>
+
+
+<div class="safety-card vehicle">
+
+<h4>🚗 Vehicle Safety</h4>
+
+<ul>
+<li>✔ Maintain safe following distance</li>
+<li>✔ Check brakes and tires regularly</li>
+<li>✔ Ensure lights are working</li>
+<li>✔ Keep emergency kit in vehicle</li>
+</ul>
+
+</div>
+
+
+
+<div class="safety-card driver">
+
+<h4>👤 Driver Safety</h4>
+
+<ul>
+<li>✔ Avoid distractions while driving</li>
+<li>✔ Take breaks during long journeys</li>
+<li>✔ Never drive under influence</li>
+<li>✔ Wear seatbelt at all times</li>
+</ul>
+
+</div>
+
+
+
+<div class="safety-card road">
+
+<h4>🛣 Road Safety</h4>
+
+<ul>
+<li>✔ Obey traffic signals</li>
+<li>✔ Stay in your lane</li>
+<li>✔ Use indicators</li>
+<li>✔ Watch pedestrians</li>
+</ul>
+
+</div>
+
+
+
+<div class="safety-card congestion">
+
+<h4>🚨 Congestion Safety</h4>
+
+<ul>
+<li>✔ Stay calm and avoid aggressive driving</li>
+<li>✔ Maintain extra braking distance</li>
+<li>✔ Watch for sudden traffic stops</li>
+<li>✔ Keep emergency contacts accessible</li>
+<li>✔ Use hazard lights if traffic stops suddenly</li>
+</ul>
+
+</div>
+
+
+</div>
+
+</body>
+</html>
